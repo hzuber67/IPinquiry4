@@ -45,7 +45,7 @@ install_github("https://github.com/hzuber67/IPinquiry4", build_vignettes = TRUE)
 
 ### Run IPinquiry4
 
-Please refer to the html tutorial for a detailed IPinquiry protocol. An example dataset is included in the packages.
+Please refer to the html tutorial for a detailed IPinquiry protocol. An example dataset is included in the package.
 
 ```{R}
 browseVignettes("IPinquiry4")
