@@ -1,0 +1,25 @@
+Package: IPinquiry4
+Type: Package
+Title: Statistical analysis and data visualisation for co-immunoprecipitation coupled to mass spectrometry experiments
+Version: 0.4.0
+Author: Helene Zuber and Timothee Vincent
+Maintainer: Helene Zuber <helene.zuber@ibmp-cnrs.unistra.fr>
+Description: IPinquiry package compiles several functions to: i) identify protein significanlty enriched in co-IP experiment, ii) to retrieve annotation for detected proteins, iii)to vizualize data generating differents type of graphs, such as volcano plot, MDS or heatmap.
+License: GPL-3
+Depends: R (>= 2.15)
+Imports: edgeR
+Encoding: UTF-8
+LazyData: true
+Suggests: 
+    knitr,
+    rmarkdown,
+    ggplot2,
+    xlsx,
+    RColorBrewer,
+    pheatmap,
+    DT,
+    plotly,
+    biomaRt,
+    htmlwidgets
+VignetteBuilder: knitr
+RoxygenNote: 7.1.0

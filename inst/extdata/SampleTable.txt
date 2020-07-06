@@ -1,0 +1,9 @@
+IP_names	sample
+Mut_L0_1	M1
+Mut_L0_2	M1
+Mut_L3_1	M1
+Mut_L3_2	M1
+URT1_L12_1_2019	urt1
+URT1_L12_2_2019	urt1
+URT1_L17_1_2019	urt1
+URT1_L17_2_2019	urt1

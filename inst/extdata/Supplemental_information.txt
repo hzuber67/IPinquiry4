@@ -1,0 +1,41 @@
+AGI	Classification	
+AT2G45620.1	URT1 (bait)	
+AT5G42950.1	CCR4-NOT complex and putative associated proteins	
+AT4G00660.2	Translation repressors/decapping activators	
+AT1G26110.1	Translation repressors/decapping activators	
+AT2G45810.1	Translation repressors/decapping activators	
+AT3G61240.1	Translation repressors/decapping activators	
+AT3G13300.1	Translation repressors/decapping activators	
+AT5G45330.1	Translation repressors/decapping activators	
+AT2G29200.1	CCR4-NOT complex and putative associated proteins	
+AT2G29190.1	CCR4-NOT complex and putative associated proteins	
+AT2G29140.1	CCR4-NOT complex and putative associated proteins	
+AT1G27430.1	CCR4-NOT complex and putative associated proteins	
+AT1G02080.1	CCR4-NOT complex and putative associated proteins	
+AT3G60240.4	Translation initiation factors	
+AT2G42520.1	Other protein factors involved in RNA metabolism	
+AT3G58510.1	Other protein factors involved in RNA metabolism	
+AT5G48650.1	Other protein factors involved in RNA metabolism	
+AT3G13460.1	Other protein factors involved in RNA metabolism	
+AT3G58570.1	Other protein factors involved in RNA metabolism	
+AT5G47010.1	Other protein factors involved in RNA metabolism	
+AT5G61020.1	Other protein factors involved in RNA metabolism	
+AT5G18110.1	Translation repressors/decapping activators	
+AT4G34110.1	Other protein factors involved in RNA metabolism	
+AT5G40490.1	Other protein factors involved in RNA metabolism	
+AT1G79090.1	Translation repressors/decapping activators	
+AT1G24300.1	CCR4-NOT complex and putative associated proteins	
+AT5G35430.1	CCR4-NOT complex and putative associated proteins	
+AT1G49760.1	Other protein factod involved in RNA metabolism	
+AT1G54270.1	Translation initiation factors	
+AT1G72730.1	Translation initiation factors	
+AT3G13920.2	Translation initiation factors	
+AT1G75660.1	Other protein factors involved in RNA metabolism	Other protein factors involved in RNA metabolism
+AT1G54080.2	Other protein factors involved in RNA metabolism	Other protein factors involved in RNA metabolism
+AT3G03950.3	Other protein factors involved in RNA metabolism	Other protein factors involved in RNA metabolism
+AT3G13060.2	Other protein factors involved in RNA metabolism	Other protein factors involved in RNA metabolism
+AT3G13290.1	Translation repressors/decapping activators	
+AT5G18420.2	CCR4-NOT complex and putative associated proteins	
+AT2G26280.1	Other protein factors involved in RNA metabolism	
+AT1G14790.1	Other protein factors involved in RNA metabolism	
+AT3G58560.1	CCR4-NOT complex and putative associated proteins	
