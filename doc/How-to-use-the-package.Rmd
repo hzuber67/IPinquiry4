@@ -1,0 +1,222 @@
+---
+title: "How to use the IPinquiry4 R package"
+author: Helene Zuber and Timothee Vincent
+date: July 1, 2020
+output: 
+  prettydoc::html_pretty:
+    theme: cayman
+    highlight: github
+vignette: >
+  %\VignetteIndexEntry{How-to-use-the-package}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+
+# Load library
+```{r setup}
+library(IPinquiry4)
+```
+
+
+# Load data
+Input data consists in two files :  
+  - a **Count table** (txt format) that contains spectral counts for all proteins detected in IP. Each row corresponds to one protein detected in IP and each column corresponds to one IP experiments.   
+  - a **Sample table** (txt format) that gives information about samples. First column indicates the IP names, second column the conditions and finally the third column is optional and allow for indicating potential batch effect, related for example to different experiments included in the analysis.  
+        
+An example dataset corresponding to co-IP experiment in Arabidopsis ([Scheer et de Almeida *et al.* 2020](https://doi.org/10.1101/2020.05.26.114322)) was included in the package. 
+
+Directory for the `Count table` and the `Sample table` of the example dataset.
+```{r}
+CountTable <- system.file("extdata", "CountTable.txt", package = "IPinquiry4")
+SampleTable <- system.file("extdata", "SampleTable.txt", package = "IPinquiry4")
+```
+
+Now we can load IP data using `load_IP_Data`function.
+```{r Function for data loading}
+IP_data <- load_IP_Data(CountTable, SampleTable)
+```
+
+
+# Vizualisation of the overall variability between IP using MDS plot
+ Multidimensional scale plot allows seing global variation between IP experiments. MDS can be plotted based on raw data (`norm="nothing"`, by default) or on normalized data either based on the total number of count (`norm="total"`) or on the median-to-ratios method as used in DEseq2 R package (`norm="DEseq"`)
+ 
+MDS without normalisation
+```{r echo=TRUE, fig.height=5, fig.width=6}
+MDSplot(IP_data)
+```
+
+`subset_IPObj_treat` and  `subset_IPObj_batch` function can also be used to subset the dataset according to specific conditions/treatments or to specific batch (ex. replicats). `subset_IPObj_treat` allows the selection of specific treatments/conditions. `subset_IPObj_batch` allows the selection of specific batchs.
+
+Here we plot the MDS for the treatment "urt1"
+```{r}
+#directory where is the file
+IP_urt1 <- subset_IPObj_treat(IP_data, "urt1")
+```
+
+```{r, fig.height=5, fig.width=6}
+MDSplot(IP_urt1, norm="DEseq")
+```
+
+# Statistical analysis
+The statistical analysis is based on the glm model developped by the [**EdgeR package**](https://bioconductor.org/packages/release/bioc/html/edgeR.html). This statistical model was already used for the data analysis of mass spectrometry in the [**msmsTests package**](https://www.bioconductor.org/packages/release/bioc/html/msmsTests.html).  
+Statistical comparison needs to be performed for each pairwise comparison. Here we have two treatments: "urt1" and "M1". 
+
+By defaut, IPinquiry4 package uses the Genewise Negative Binomial Generalized Linear Model with Quasi-likelihood Tests. The `stat_test` function applies the three following EdgeR functions :  
+ - [**estimateDisp**](https://www.rdocumentation.org/packages/edgeR/versions/3.14.0/topics/estimateDisp)  
+ - [**glmQLFit**](https://www.rdocumentation.org/packages/edgeR/versions/3.14.0/topics/glmQLFit), Genewise Negative Binomial Generalized Linear Models with Quasi-likelihood Tests  
+ - **glmQLFTest**
+  
+By adding the argument `glm="classic"`, you can use instead the EdgeR function based on the Genewise Negative Binomial Generalized Linear Models without  Quasi-likelihood Tests. The `stat_test` function then applies the three following EdgeR functions :  
+  - [**estimateDisp**](https://www.rdocumentation.org/packages/edgeR/versions/3.14.0/topics/estimateDisp)  
+  - [**glmFit**](https://www.rdocumentation.org/packages/edgeR/versions/3.14.0/topics/glmFit)  
+  - **glmLRT** 
+
+Statistical test can take into account a scale factor. Here you have three choices:  
+ - no normalization (`div=“nothing”`),   
+ - normalization compared to the total number of counts (`div=“total”`) and   
+ - DEseq like normalisation (`div=“DEseq”`, median-to-ratio methods)  
+
+Low abundance tags can adversely affect the dispersion estimation. Here low abundance protein are filtered out before the calculation of the dispersion. Only proteins with total sum of counts above 10 are used.
+```{r}
+test <- stat_test(IP_data, "urt1", treatment = "M1", div="DEseq", min.disp=10)
+```
+Number of differentially accumulated proteins
+```{r}
+nrow(subset(test, test$adjp<0.05))
+```
+
+
+# Retrieve functional annotation for each protein
+Functional annotation are retrieve using [**biomaRt**](https://bioconductor.org/packages/release/bioc/html/biomaRt.html). Annotation are collected from [**Ensembl database**](https://www.ensembl.org/). Internet connection is required.  
+
+Here, annotations from *Arabidopsis thaliana* are retrieved.
+```{r}
+annotated_table_At <- addBiomaRtAnnotation(test, biomart="plants_mart", dataset="athaliana_eg_gene")
+```
+
+Other example for Drosophila : `annotated_table_Dm <- addBiomaRtAnnotation(controlvsAdipoRQ, biomart = "ENSEMBL_MART_ENSEMBL", dataset = "dmelanogaster_gene_ensembl", host = "www.ensembl.org")`
+
+# Create and export a result table
+
+### Interactive table
+
+An interactive can be created and saved using [**DT package**](https://cran.r-project.org/web/packages/DT/index.html)  
+```{r results = 'hide'}
+createTable(annotated_table_At)
+```
+
+The interactive table can be saved under html format.  
+```{r}
+p <- createTable(annotated_table_At)
+htmlwidgets::saveWidget(p,"interactive_table.html", selfcontained = TRUE)
+```
+
+### Excel table
+
+Results table can also be saved using [**xlsx package**](https://cran.r-project.org/web/packages/xlsx/index.html)
+```{r}
+xlsx::write.xlsx(annotated_table_At, "IP_results.xlsx", sheetName = "Statistics")
+```
+# Volcanoplots to plot statistical significance according to protein enrichment
+
+### Interactive volcanoplot
+
+Interactive volcanoplot is based on the [**Plotly R package**](https://plotly.com/r/).  
+Volcanoplot shows the logFC according to p.value or to adjusted p-value
+```{r, fig.height=5, fig.width=7}
+# add annotation as tag for the volcanoplot
+htmlPlot(annotated_table_At, sign="adjp")
+```
+
+By defaut point labels correspond to row.names. Custom text can also be used instead using the `custom_text` argument. Here for example, I add in the example code below the 30 first letters of the description column of the result table 
+```{r results = 'hide'}
+# extract the 30 first letters of the description column
+my_test = paste(row.names(annotated_table_At) , "_",substr(annotated_table_At$description,1,30))
+
+# add annotation as tag for the volcanoplot
+htmlPlot(annotated_table_At,  custom_text=my_test)
+```
+
+By defaut, point colors are set according to the significance and dotted lines are set both according to p-value and LogFC. By defaut, p-value and LogFC cut-offs are  0.05 (`max.pval=0.05`) and 1 (`min.LFC=1`), respectively, and can be adjusted. Point colors can also be used to highlight specific genes/proteins. Here for example in the code below, I highlight three proteins linked to decapping.
+```{r results = 'hide'}
+smallTrueList <- c("AT1G26110.1", "AT5G45330.1", "AT3G13300")
+htmlPlot(annotated_table_At, listGenes = smallTrueList, custom_text=my_test)
+```
+
+There is also the possibility to set colors according to a supplemental column. The `add_suppl_information` function can be used to combine your results table with another table containing classification citeria. This new column can then be used to set point colors.
+
+```{r results = 'hide'}
+# directory with the supplemental information for the example dataset
+Supplemental <- system.file("extdata", "Supplemental_information.txt", package = "IPinquiry4")
+
+# Add a supplemental column with criteria for color classification 
+# based on the "Supplemental_information.txt" file
+annotated_table_At2 <- add_suppl_information(annotated_table_At, Supplemental)
+
+# Create the volcanoplot with colors according to this new column
+htmlPlot(annotated_table_At2, colforcolor = annotated_table_At2$Classification)
+```
+
+The interactive volcanoplot can be directly saved under html format.
+```{r}
+p <- htmlPlot(annotated_table_At2, colforcolor = annotated_table_At2$Classification)
+htmlwidgets::saveWidget(p,"interactive_volcanoplot_plot.html", selfcontained = TRUE)
+```
+
+
+### Volcanoplot based on ggplot2 package  
+This graph is created using [**ggplot2**](https://cran.r-project.org/web/packages/ggplot2/index.html) and can be saved as a .pdf file.
+
+Defaut volcanoplot
+```{r echo=TRUE, fig.height=5, fig.width=7}
+PDF_Plot(annotated_table_At2)
+```
+
+Many arguments can be adjusted, such as p-value and LogFC cut-offs, axis limits, point colors and sizes, text used as label... Text labels are added only for protein with significant p-value. A title can also be added to the graph. Text labels and cut-off lines can also be removed 
+
+```{r echo=TRUE, fig.height=5, fig.width=7}
+PDF_Plot(annotated_table_At2, sign="p.value", max.pval = 0.05,  min.LFC = 1, line=TRUE, point_color= c("gray", "purple"), min_x=-10, max_x=10, min_y=0, max_y=20, point_size=3, label=TRUE, label_size=3, custom_text=annotated_table_At2$external_gene_name, title="The perfect volcanoplot")
+```
+
+By defaut, color will be set according to p-value but as with the `htmlPlot` function, there is also the possibility to set colors according to a classification criteria (see chunk above with the `add_suppl_information` function)
+. 
+```{r echo=TRUE, fig.height=5, fig.width=8}
+PDF_Plot(annotated_table_At2, sign="adjp", max.pval = 0.05,  min.LFC = 1, line=TRUE, label=FALSE, colforcolor=annotated_table_At2$Classification, custom_text=annotated_table_At2$external_gene_name)
+```
+
+Finally, the volcanoplot can be saved as a pdf file using the ggsave function of ggplot2 R package
+```{r echo=TRUE}
+graph <- PDF_Plot(annotated_table_At2)
+library(ggplot2)
+ggsave("Volcanoplot.pdf", graph, height=7, width=10)
+```
+
+See `help(PDF_Plot)` for all the options. 
+
+# Heatmap to plot expression pattern in the different samples
+
+The heatmap allows the visualisation of protein expression pattern between samples. The function `IP_heatmap` creates an heatmap for a list of selected genes/protein. This heatmap is performed based on the pheatmap package, see [pheatmap](https://www.rdocumentation.org/packages/pheatmap/versions/1.0.12/topics/pheatmap).
+
+Here I draw heatmap for the protein with a classication of interest in the example IPs. I choose the median to ratio method (DEseq2) to normalize data. Several arguments can also be adjusted, such as fontsize, normalisation method, graph title ... Hierarchical clustering of columns or rows can be removed. Nicely, [Pheatmap](https://www.rdocumentation.org/packages/pheatmap/versions/1.0.12/topics/pheatmap) package allows also to add color code based annotation for columns or rows. Here I added row color code to indicate classification of the proteins used for the heatmap. For all option see `help(IP_heatmap)`
+
+```{r echo=TRUE, fig.height=5, fig.width=8}
+#Subset only protein with classification linked to RNA metabolism
+class <- annotated_table_At2[!is.na(annotated_table_At2$Classification),]
+# I create first a one-column dataframe with the classification for each selected proteins 
+# and the protein ID as row.names
+class2 <- class[,"Classification", drop=F]
+# I draw the heatmap
+IP_pheatmap(IP_data, GeneList=row.names(class), norm="DEseq", annotation_row = class2, fontsize_row=8)    
+```
+
+```{R}
+sessionInfo()
+```
