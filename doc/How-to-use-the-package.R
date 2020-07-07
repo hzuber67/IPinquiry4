@@ -40,9 +40,6 @@ createTable(annotated_table_At)
 p <- createTable(annotated_table_At)
 htmlwidgets::saveWidget(p,"interactive_table.html", selfcontained = TRUE)
 
-## -----------------------------------------------------------------------------
-xlsx::write.xlsx(annotated_table_At, "IP_results.xlsx", sheetName = "Statistics")
-
 ## ---- fig.height=5, fig.width=7-----------------------------------------------
 # add annotation as tag for the volcanoplot
 htmlPlot(annotated_table_At, sign="adjp")

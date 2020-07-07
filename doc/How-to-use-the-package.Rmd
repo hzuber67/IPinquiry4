@@ -3,9 +3,7 @@ title: "How to use the IPinquiry4 R package"
 author: Helene Zuber and Timothee Vincent
 date: July 1, 2020
 output: 
-  prettydoc::html_pretty:
-    theme: cayman
-    highlight: github
+  rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{How-to-use-the-package}
   %\VignetteEngine{knitr::rmarkdown}
@@ -31,7 +29,7 @@ Input data consists in two files :
   - a **Count table** (txt format) that contains spectral counts for all proteins detected in IP. Each row corresponds to one protein detected in IP and each column corresponds to one IP experiments.   
   - a **Sample table** (txt format) that gives information about samples. First column indicates the IP names, second column the conditions and finally the third column is optional and allow for indicating potential batch effect, related for example to different experiments included in the analysis.  
         
-An example dataset corresponding to co-IP experiment in Arabidopsis ([Scheer et de Almeida *et al.* 2020](https://doi.org/10.1101/2020.05.26.114322)) was included in the package. 
+An example dataset corresponding to co-IP experiment in Arabidopsis ([Scheer, de Almeida *et al.* 2020](https://doi.org/10.1101/2020.05.26.114322)) was included in the package. 
 
 Directory for the `Count table` and the `Sample table` of the example dataset.
 ```{r}
@@ -106,25 +104,20 @@ Other example for Drosophila : `annotated_table_Dm <- addBiomaRtAnnotation(contr
 
 # Create and export a result table
 
-### Interactive table
+IPinquiry package include a function based on [**DT package**] (https://cran.r-project.org/web/packages/DT/index.html) to create an interactive table with results.
 
-An interactive can be created and saved using [**DT package**](https://cran.r-project.org/web/packages/DT/index.html)  
 ```{r results = 'hide'}
 createTable(annotated_table_At)
 ```
 
-The interactive table can be saved under html format.  
+This table is interactive and can be used to sort and search proteins, select and copy interesting rows, export results... This interactive table can also be directly saved as a html file.  
 ```{r}
 p <- createTable(annotated_table_At)
 htmlwidgets::saveWidget(p,"interactive_table.html", selfcontained = TRUE)
 ```
 
-### Excel table
+Alternatively, results table can also be saved using [**xlsx package**](https://cran.r-project.org/web/packages/xlsx/index.html) with the following command line `xlsx::write.xlsx(annotated_table_At, "IP_results.xlsx", sheetName = "Statistics")`
 
-Results table can also be saved using [**xlsx package**](https://cran.r-project.org/web/packages/xlsx/index.html)
-```{r}
-xlsx::write.xlsx(annotated_table_At, "IP_results.xlsx", sheetName = "Statistics")
-```
 # Volcanoplots to plot statistical significance according to protein enrichment
 
 ### Interactive volcanoplot
