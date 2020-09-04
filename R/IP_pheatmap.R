@@ -10,13 +10,14 @@
 #' @param annotation_col Data frame that specifies the annotations shown on left side of the heatmap.
 #' @param annotation_row Data frame that specifies the annotations shown on top of the heatmap.
 #' @param fontsize_row To change font size of the row label. By defaut, the font size is 6
+#' @param fontsize_col To change font size of the col label. By defaut, the font size is 6
 #' @param title To change graph title
 #' @details
 #' This function extract count data for selected genes \code{GeneList} and create an heatmap for all IP in the \code{IPObj}
 #' @return Return heatmap for selected genes/proteins
 #' @export
 #'
-IP_pheatmap <- function(IPObj, GeneList, norm = c("nothing", "total", "DEseq"), cluster_rows=TRUE, cluster_cols=TRUE, annotation_col=NULL, annotation_row=NULL, fontsize_row=6, title=NULL)
+IP_pheatmap <- function(IPObj, GeneList, norm = c("nothing", "total", "DEseq"), cluster_rows=TRUE, cluster_cols=TRUE, annotation_col=NULL, annotation_row=NULL, fontsize_row=6, fontsize_col=6, title=NULL)
 {
   if (!requireNamespace("pheatmap", quietly = TRUE)) {
     stop("Package \"pheatmap\" needed for this function to work. Please install it.",
@@ -40,6 +41,6 @@ IP_pheatmap <- function(IPObj, GeneList, norm = c("nothing", "total", "DEseq"), 
   {
     title = "Heatmap based on log2 transformation"
   }
-  pheatmap::pheatmap(MyCounts, main=title, cluster_rows=cluster_rows, cluster_cols=cluster_cols, annotation_col=annotation_col, annotation_row=annotation_row, fontsize_row= fontsize_row)
+  pheatmap::pheatmap(MyCounts, main=title, cluster_rows=cluster_rows, cluster_cols=cluster_cols, annotation_col=annotation_col, annotation_row=annotation_row, fontsize_row= fontsize_row, fontsize_col= fontsize_col)
 }
 

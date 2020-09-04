@@ -13,6 +13,7 @@ IP_pheatmap(
   annotation_col = NULL,
   annotation_row = NULL,
   fontsize_row = 6,
+  fontsize_col = 6,
   title = NULL
 )
 }
@@ -33,6 +34,8 @@ if \code{"DEseq"}, counts are normalized using the median of ratios (DEseq metho
 \item{annotation_row}{Data frame that specifies the annotations shown on top of the heatmap.}
 
 \item{fontsize_row}{To change font size of the row label. By defaut, the font size is 6}
+
+\item{fontsize_col}{To change font size of the col label. By defaut, the font size is 6}
 
 \item{title}{To change graph title}
 }
