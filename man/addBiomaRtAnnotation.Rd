@@ -9,7 +9,8 @@ addBiomaRtAnnotation(
   biomart = "plants_mart",
   dataset = "athaliana_eg_gene",
   host = "plants.ensembl.org",
-  features = c("ensembl_peptide_id", "ensembl_transcript_id", "ensembl_gene_id")
+  features = c("ensembl_peptide_id", "ensembl_transcript_id", "ensembl_gene_id",
+    "external_gene_name")
 )
 }
 \arguments{
@@ -23,7 +24,7 @@ List of available datasets can be obtained using  biomartR \code{listDatasets} f
 
 \item{host}{\code{"www.plants.ensembl.org"} by default. Can be "www.ensembl.org" to get other dataset.}
 
-\item{features}{\code{"ensembl_peptide_id"}, \code{"ensembl_transcript_id"} ou \code{"ensembl_gene_id"}.
+\item{features}{\code{"ensembl_peptide_id"}, \code{"ensembl_transcript_id"}, \code{"ensembl_gene_id"}, \code{"external_gene_name"}
 \code{"ensembl_peptide_id"} by default. To be adjusted according to ID in the row.names of the table}
 }
 \value{
