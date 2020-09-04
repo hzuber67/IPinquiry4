@@ -8,8 +8,8 @@ knitr::opts_chunk$set(
 library(IPinquiry4)
 
 ## -----------------------------------------------------------------------------
-CountTable <- system.file("extdata", "CountTable.txt", package = "IPinquiry4")
-SampleTable <- system.file("extdata", "SampleTable.txt", package = "IPinquiry4")
+CountTable <- system.file("extdata", "CountTable1.txt", package = "IPinquiry4")
+SampleTable <- system.file("extdata", "SampleTable1.txt", package = "IPinquiry4")
 
 ## ----Function for data loading------------------------------------------------
 IP_data <- load_IP_Data(CountTable, SampleTable)

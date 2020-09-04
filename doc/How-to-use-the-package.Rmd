@@ -33,8 +33,8 @@ An example dataset corresponding to co-IP experiment in Arabidopsis ([Scheer, de
 
 Directory for the `Count table` and the `Sample table` of the example dataset.
 ```{r}
-CountTable <- system.file("extdata", "CountTable.txt", package = "IPinquiry4")
-SampleTable <- system.file("extdata", "SampleTable.txt", package = "IPinquiry4")
+CountTable <- system.file("extdata", "CountTable1.txt", package = "IPinquiry4")
+SampleTable <- system.file("extdata", "SampleTable1.txt", package = "IPinquiry4")
 ```
 
 Now we can load IP data using `load_IP_Data`function.
