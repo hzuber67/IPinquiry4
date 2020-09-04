@@ -110,7 +110,10 @@ glm_edgeR <- function (IPObj,control,treatment=NULL,batchE=FALSE, div=NULL,fnm=N
   }
 
   tres <- res$table[, c(1, 3, 4)]
-  colnames(tres) <- c("LogFC", "LR", "p.value")
+  if( glm=="QL")
+  {colnames(tres) <- c("LogFC", "F.statistic", "p.value")}
+  if( glm=="classic")
+  {colnames(tres) <- c("LogFC", "LR", "p.value")}
   if (!is.null(filter))
   {
     print("Supplemental filter")
