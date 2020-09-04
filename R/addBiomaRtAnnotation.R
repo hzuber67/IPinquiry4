@@ -12,7 +12,7 @@
 #' \code{"ensembl_peptide_id"} by default. To be adjusted according to ID in the row.names of the table
 #' @return Return a result table with additional columns that contain gene or protein annotation.
 #' @export
-addBiomaRtAnnotation_2 <- function(normObj, biomart="plants_mart",
+addBiomaRtAnnotation <- function(normObj, biomart="plants_mart",
                                    dataset="athaliana_eg_gene", host="plants.ensembl.org",
                                    features=c("ensembl_peptide_id","ensembl_transcript_id","ensembl_gene_id", "external_gene_name"))
 {
