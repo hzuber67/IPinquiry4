@@ -1,0 +1,11 @@
+IP_names	sample	batch
+F016864_2014_S17_control_C1	control	one
+F016865_2014_S17_control_C2	control	one
+F016867_2014_S17_URT1_H1	urt1	one
+F016878_2014_S25_control_C5	control	one
+F016880_2014_S25_URT1_H5	urt1	one
+F016882_2015_S12_CTRL_1	control	two
+F016883_2015_S12_CTRL_2	control	two
+F016884_2015_S12_CTRL_3	control	two
+F016886_2015_S12_URT1_myc2	urt1	two
+F016887_2015_S12_URT1_myc3	urt1	two
