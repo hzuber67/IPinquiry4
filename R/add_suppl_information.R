@@ -10,7 +10,7 @@
 #'
 add_suppl_information <- function(table, info)
 {
-  supp <- read.table(info, header=T, sep= "\t", stringsAsFactors=FALSE) ##table with list of AGI for RH protein
+  supp <- read.table(info, header=T, sep= "\t", stringsAsFactors=FALSE, quote="", fill=FALSE) ##table with list of AGI for RH protein
   row.names(supp) <- supp[,1]
   supp <- supp[,2:ncol(supp),drop=F]
   mergeObj <- merge(table, supp, by="row.names", all.x=TRUE)
