@@ -22,10 +22,10 @@
 load_IP_Data <- function(countFile, sampleTable)
 {
   #Create import table with spectral count
-  Count_file <- read.table(countFile, sep= "\t", header = T, stringsAsFactors=default.stringsAsFactors())
+  Count_file <- read.table(countFile, sep= "\t", header = T, stringsAsFactors=default.stringsAsFactors(), quote="", fill=FALSE)
   Count_file_1 <- Count_file[,2:ncol(Count_file)]
   row.names(Count_file_1) <- Count_file[,1]
-  Sample_table <- read.table(sampleTable, sep= "\t", header = T, stringsAsFactors=default.stringsAsFactors())
+  Sample_table <- read.table(sampleTable, sep= "\t", header = T, stringsAsFactors=default.stringsAsFactors(), quote="", fill=FALSE)
   IPObj = list("spectral_counts"=Count_file_1)
   IPSampleTable <- Sample_table[,1]
   IPNames <- colnames(Count_file_1) # sample names of the count table
