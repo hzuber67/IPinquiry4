@@ -70,3 +70,7 @@ If vignettes were build during IPinquiry install (`build_vignettes = TRUE`), tut
 browseVignettes("IPinquiry4")
 ```
 Finally, documentation for each individual function can be loaded using `help('the function')`
+
+### Citation
+
+Kuhn, L., Vincent, T., Hammann, P., Zuber, H. (2023). Exploring Protein Interactome Data with IPinquiry: Statistical Analysis and Data Visualization by Spectral Counts. In: Burger, T. (eds) Statistical Analysis of Proteomic Data. Methods in Molecular Biology, vol 2426. Humana, New York, NY. https://doi.org/10.1007/978-1-0716-1967-4_11
