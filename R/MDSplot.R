@@ -47,9 +47,24 @@ MDSplot <- function(IPObj, norm = c("nothing","total","DEseq"))
   y_max <- max(y) + (abs(max(y)) * 0.3)
   x_min <- min(x) - (abs(min(x)) * 0.3)
   y_min <- min(y) - (abs(min(y)) * 0.3)
-  plot(x, y, xlab=sprintf("Coordinate 1 (%.2f%%)", PC1), ylab=sprintf("Coordinate 2 (%.2f%%)", PC2), main="Metric MDS", sub=sprintf("%s", normInfo),
-       type="p",pch = 20, asp = 1, cex.main=1.2, cex.lab=1.0, cex.sub=1.0, font.main = 2, font.sub = 3,col=c(IPObj$treat), xlim=c(x_min,x_max), ylim=c(y_min,y_max))
-  text(x, y, labels = substr(row.names(trans), 1, 20), cex=0.7,col=c(IPObj$treat),font=1, offset = 0.5, adj = c(0.5,2))
-  abline(h = 0, lty = 3)
-  abline(v = 0, lty = 3)
+  # The funtion was changed in the following part of the function
+  Tb <-data.frame(x=x, y=y)
+  ggplot(Tb, aes(x, y, color=c(IPObj$treat))) +
+    geom_point() +
+    geom_text(label = substr(row.names(trans), 1, 20)) +
+    labs(
+      x= sprintf("Coordinate 1 (%.2f%%)", PC1),
+      y=sprintf("Coordinate 2 (%.2f%%)", PC2),
+      title="Metric MDS",
+      subtitle=sprintf("%s", normInfo),
+      color = "Groups") +
+    theme(
+      panel.background = element_blank(),
+      panel.grid.major = element_blank(),
+      panel.border = element_rect(colour="black",fill=NA,linewidth=0.5),
+      axis.title=element_text(size=10),
+      plot.title=element_text(size=16, hjust=0.5, face="bold", colour="black", vjust=0),
+      plot.subtitle=element_text(size=12, hjust=0.5, face="italic", color="gray50"),
+      legend.key = element_rect(fill = "transparent")) +
+    coord_cartesian(ylim = c(y_min,y_max), xlim=c(x_min,x_max))
 }

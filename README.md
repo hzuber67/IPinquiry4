@@ -13,7 +13,10 @@ The main purpose of this package is to provide a simple R pipeline with a limite
 For the statistical analysis, IPinquiry uses the **Genewise Negative Binomial Generalized Linear Model** developped by [**EdgeR**](https://bioconductor.org/packages/release/bioc/html/edgeR.html) and uses **spectral counts** as input. This statistical model is also among the models proposed in [**msmsTests**](https://www.bioconductor.org/packages/release/bioc/html/msmsTests.html) to analyze mass spectrometry data .  
 
 ### Current version 
-0.4.6
+0.4.7
+
+Changes compared to previous version 0.4.6:
+  - Fix bugs of the MDSplot function linked to the R version 4.2
 
 Changes compared to previous version 0.4.5:
   - Add arguments to prevent "EOF within quoted string" error when importing data
