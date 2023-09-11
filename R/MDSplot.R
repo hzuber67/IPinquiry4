@@ -49,7 +49,7 @@ MDSplot <- function(IPObj, norm = c("nothing","total","DEseq"))
   y_min <- min(y) - (abs(min(y)) * 0.3)
   # The funtion was changed in the following part of the function
   Tb <-data.frame(x=x, y=y)
-  ggplot(Tb, aes(x, y, color=c(IPObj$treat))) +
+  ggplot2::ggplot(Tb, aes(x, y, color=c(IPObj$treat))) +
     geom_point() +
     geom_text(label = substr(row.names(trans), 1, 20)) +
     labs(
