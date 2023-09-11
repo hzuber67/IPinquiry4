@@ -49,16 +49,16 @@ MDSplot <- function(IPObj, norm = c("nothing","total","DEseq"))
   y_min <- min(y) - (abs(min(y)) * 0.3)
   # The funtion was changed in the following part of the function
   Tb <-data.frame(x=x, y=y)
-  ggplot2::ggplot(Tb, aes(x, y, color=c(IPObj$treat))) +
-    geom_point() +
-    geom_text(label = substr(row.names(trans), 1, 20)) +
-    labs(
+  ggplot2::ggplot(Tb, ggplot2::aes(x, y, color=c(IPObj$treat))) +
+    ggplot2::geom_point() +
+    ggplot2::geom_text(label = substr(row.names(trans), 1, 20)) +
+    ggplot2::labs(
       x= sprintf("Coordinate 1 (%.2f%%)", PC1),
       y=sprintf("Coordinate 2 (%.2f%%)", PC2),
       title="Metric MDS",
       subtitle=sprintf("%s", normInfo),
       color = "Groups") +
-    theme(
+    ggplot2::theme(
       panel.background = element_blank(),
       panel.grid.major = element_blank(),
       panel.border = element_rect(colour="black",fill=NA,linewidth=0.5),
@@ -66,5 +66,5 @@ MDSplot <- function(IPObj, norm = c("nothing","total","DEseq"))
       plot.title=element_text(size=16, hjust=0.5, face="bold", colour="black", vjust=0),
       plot.subtitle=element_text(size=12, hjust=0.5, face="italic", color="gray50"),
       legend.key = element_rect(fill = "transparent")) +
-    coord_cartesian(ylim = c(y_min,y_max), xlim=c(x_min,x_max))
+    ggplot2::coord_cartesian(ylim = c(y_min,y_max), xlim=c(x_min,x_max))
 }
