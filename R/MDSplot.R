@@ -59,12 +59,12 @@ MDSplot <- function(IPObj, norm = c("nothing","total","DEseq"))
       subtitle=sprintf("%s", normInfo),
       color = "Groups") +
     ggplot2::theme(
-      panel.background = element_blank(),
-      panel.grid.major = element_blank(),
-      panel.border = element_rect(colour="black",fill=NA,linewidth=0.5),
-      axis.title=element_text(size=10),
-      plot.title=element_text(size=16, hjust=0.5, face="bold", colour="black", vjust=0),
-      plot.subtitle=element_text(size=12, hjust=0.5, face="italic", color="gray50"),
-      legend.key = element_rect(fill = "transparent")) +
+      panel.background = ggplot2::element_blank(),
+      panel.grid.major = ggplot2::element_blank(),
+      panel.border = ggplot2::element_rect(colour="black",fill=NA,linewidth=0.5),
+      axis.title=ggplot2::element_text(size=10),
+      plot.title=ggplot2::element_text(size=16, hjust=0.5, face="bold", colour="black", vjust=0),
+      plot.subtitle=ggplot2::element_text(size=12, hjust=0.5, face="italic", color="gray50"),
+      legend.key = ggplot2::element_rect(fill = "transparent")) +
     ggplot2::coord_cartesian(ylim = c(y_min,y_max), xlim=c(x_min,x_max))
 }
