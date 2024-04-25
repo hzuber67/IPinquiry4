@@ -13,8 +13,8 @@
 #' @return Return a result table with additional columns that contain gene or protein annotation.
 #' @export
 addBiomaRtAnnotation <- function(normObj, biomart="plants_mart",
-                                   dataset="athaliana_eg_gene", host="plants.ensembl.org",
-                                   features=c("ensembl_peptide_id","ensembl_transcript_id","ensembl_gene_id", "external_gene_name"))
+                                   dataset="athaliana_eg_gene", host="https://plants.ensembl.org",
+                                   features=c("ensembl_peptide_id"))
 {
   stopifnot(!missing(normObj))
   if (!requireNamespace("biomaRt", quietly = TRUE)) {
